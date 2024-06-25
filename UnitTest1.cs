@@ -71,7 +71,7 @@ namespace SwagLab
 
             //--------verify logo start--------------
 
-            //IWebElement logoElement = driver.FindElement(By.ClassName("app_logo"));
+           
 
             string logo_backgroundImage = inventoryPage.getLogoElement().GetCssValue("background-image");
             string logo_imageUrl = logo_backgroundImage.Replace("url(\"", "").Replace("\")", "");
@@ -142,12 +142,12 @@ namespace SwagLab
 
             driver.Navigate().GoToUrl(baseUrl + "inventory.html");
             
-            //IWebElement menuButton = driver.FindElement(By.CssSelector(".bm-burger-button"));
+            
             InventoryPage inventoryPage = new InventoryPage(driver);
             WaitFor(waitTime);
             inventoryPage.getMenuButton().Click();
             WaitFor(waitTime);
-            //IWebElement menuItem = driver.FindElement(By.XPath($"//a[contains(text(), '{menuItemName}')]"));
+          
 
             inventoryPage.getMenuItem(menuItemName).Click();
             WaitFor(waitTime);
@@ -315,20 +315,21 @@ namespace SwagLab
         public void verifySorting()
         {
             driver.Navigate().GoToUrl(baseUrl + "inventory.html");
+            InventoryPage inventoryPage = new InventoryPage(driver);
 
             WaitFor(waitTime);
 
-            IWebElement selectOptions = driver.FindElement(By.ClassName("product_sort_container"));
+          
 
 
             //-------verify sorting in ascending order(a to z)------
-            selectOptions.Click();
+            inventoryPage.getProductContainer().Click();
             WaitFor(waitTime);
-            var az = driver.FindElement(By.CssSelector("option[value='az']"));
-            az.Click();
-            selectOptions.Click();
-            IList<IWebElement> productElements = driver.FindElements(By.CssSelector(".inventory_item_name"));
-            List<string> productNames = productElements.Select(e => e.Text).ToList();
+            
+            inventoryPage.getSortItemsInAscendingOrder().Click();
+            inventoryPage.getProductContainer().Click();
+           
+            List<string> productNames = inventoryPage.getInventoryItemsName().Select(e => e.Text).ToList();
             Assert.That(SortingChecker.IsSortedAscending(productNames), Is.EqualTo(true), $"product are not in ascending order");
 
             //------- end of  sorting in ascending order(a to z) ------
@@ -336,14 +337,14 @@ namespace SwagLab
             WaitFor(waitTime);
 
             //-------verify sorting in decending order(z to a)------
-            selectOptions.Click();
+            inventoryPage.getProductContainer().Click();
             WaitFor(waitTime);
-            var za = driver.FindElement(By.CssSelector("option[value='za']"));
-            za.Click();
-            selectOptions.Click();
+           
+            inventoryPage.getSortItemsInDecendingOrder().Click();
+            inventoryPage.getProductContainer().Click();
 
-            IList<IWebElement> productElements_za = driver.FindElements(By.CssSelector(".inventory_item_name"));
-            List<string> productNames_za = productElements_za.Select(e => e.Text).ToList();
+          
+            List<string> productNames_za = inventoryPage.getInventoryItemsName().Select(e => e.Text).ToList();
 
             WaitFor(waitTime);
             Assert.That(SortingChecker.IsSortedDescending(productNames_za), Is.EqualTo(true), $"product are not in decending order");
@@ -353,14 +354,14 @@ namespace SwagLab
             WaitFor(waitTime);
 
             //-------verify how to high price(1 to 999..)------
-            selectOptions.Click();
+            inventoryPage.getProductContainer().Click();
             WaitFor(waitTime);
-            var lohi = driver.FindElement(By.CssSelector("option[value='lohi']"));
-            lohi.Click();
-            selectOptions.Click();
+            
+            inventoryPage.getItemsInLowToHighPrice().Click();
+            inventoryPage.getProductContainer().Click();
 
-            IList<IWebElement> productElement_lohi = driver.FindElements(By.CssSelector(".inventory_item_price"));
-            List<string> productPrice_lohi = productElement_lohi.Select(e => e.Text).ToList();
+           
+            List<string> productPrice_lohi = inventoryPage.getInventoryItemsPrice().Select(e => e.Text).ToList();
             List<float> floatPrices_lohi = productPrice_lohi.Select(p => float.Parse(p.TrimStart('$'))).ToList();
 
             WaitFor(waitTime);
@@ -372,14 +373,14 @@ namespace SwagLab
 
 
             //-------verify High to Low price(1 to 999..)------
-            selectOptions.Click();
+            inventoryPage.getProductContainer().Click();
             WaitFor(waitTime);
-            var hilo = driver.FindElement(By.CssSelector("option[value='hilo']"));
-            hilo.Click();
-            selectOptions.Click();
+            //var hilo = driver.FindElement(By.CssSelector("option[value='hilo']"));
+            inventoryPage.getItemsInHighToLowPrice().Click();
+            inventoryPage.getProductContainer().Click();
 
-            IList<IWebElement> productElement_hilo = driver.FindElements(By.CssSelector(".inventory_item_price"));
-            List<string> productPrice_hilo = productElement_hilo.Select(e => e.Text).ToList();
+            //IList<IWebElement> productElement_hilo = driver.FindElements(By.CssSelector(".inventory_item_price"));
+            List<string> productPrice_hilo = inventoryPage.getInventoryItemsPrice().Select(e => e.Text).ToList();
             List<float> floatPrices_hilo = productPrice_hilo.Select(p => float.Parse(p.TrimStart('$'))).ToList();
 
             WaitFor(waitTime);
@@ -388,15 +389,8 @@ namespace SwagLab
             //------- end of  verify high to low  price (999.. to 1) ------
 
 
-
-
-            
             WaitFor(waitTime);
-            WaitFor(waitTime);
-            WaitFor(waitTime);
-
-
-
+           
 
         }
 
@@ -464,18 +458,11 @@ namespace SwagLab
 
                 //--- verify number of items in cart logic------------
 
-
-                var Ncart = driver.FindElement(By.CssSelector("a[href=\"./cart.html\"]:last-child"));
-
-                int n = Ncart.Text == "" ? 0 : int.Parse(Ncart.Text);
-
-                Assert.That(n, Is.EqualTo(totalItems), $"problem with cart add, remove");
+                Assert.That(inventoryPage.getNumberOfItemsINCart(), Is.EqualTo(totalItems), $"problem with cart add, remove");
                 //------------------end of number of items in cart logic----------------------
 
 
-                var back = driver.FindElement(By.CssSelector("button[class='inventory_details_back_button']"));
-
-                back.Click();
+                inventoryItemPage.getBackButton(driver).Click();
                 driver.Navigate().Refresh();  //refresh ..
 
 

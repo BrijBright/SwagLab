@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SwagLab")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9bbb1d7a70415d02f891454e88018442f50faa07")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+610d23658afa7b7b9cdc9b5319c853bb9fd7bc0e")]
 [assembly: System.Reflection.AssemblyProductAttribute("SwagLab")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SwagLab")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

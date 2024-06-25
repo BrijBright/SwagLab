@@ -142,6 +142,82 @@ namespace SwagLab.POM
         }
 
 
+        //IWebElement selectOptions = driver.FindElement(By.ClassName("product_sort_container"));
+
+        [FindsBy(How = How.ClassName, Using = "product_sort_container")]
+        private IWebElement selectOptions;
+
+        public IWebElement getProductContainer()
+        {
+            return selectOptions;
+        }
+
+        //var az = driver.FindElement(By.CssSelector("option[value='az']"));
+        [FindsBy(How = How.CssSelector, Using = "option[value='az']")]
+        private IWebElement az;
+
+        public IWebElement getSortItemsInAscendingOrder()
+        {
+            return az;
+        }
+
+        //var za = driver.FindElement(By.CssSelector("option[value='za']"));
+
+        [FindsBy(How = How.CssSelector, Using = "option[value='za']")]
+        private IWebElement za;
+
+        public IWebElement getSortItemsInDecendingOrder()
+        {
+            return za;
+        }
+
+        //IList<IWebElement> productElements = driver.FindElements(By.CssSelector(".inventory_item_name"));
+
+        [FindsBy(How = How.CssSelector, Using = ".inventory_item_name")]
+        private IList<IWebElement> inventory_item_name;
+
+        public IList<IWebElement> getInventoryItemsName()
+        {
+            return inventory_item_name;
+        }
+
+        ////var lohi = driver.FindElement(By.CssSelector("option[value='lohi']"));
+        
+
+        [FindsBy(How = How.CssSelector, Using = "option[value='lohi']")]
+        private IWebElement lohi;
+
+        public IWebElement getItemsInLowToHighPrice()
+        {
+            return lohi;
+        }
+
+
+        //var hilo = driver.FindElement(By.CssSelector("option[value='hilo']"));
+
+        [FindsBy(How = How.CssSelector, Using = "option[value='hilo']")]
+        private IWebElement hilo;
+
+        public IWebElement getItemsInHighToLowPrice()
+        {
+            return hilo;
+        }
+
+
+        //IList<IWebElement> productElement_lohi = driver.FindElements(By.CssSelector(".inventory_item_price"));
+
+
+        [FindsBy(How = How.CssSelector, Using = ".inventory_item_price")]
+        private IList<IWebElement> productElement_lohi;
+
+        public IList<IWebElement> getInventoryItemsPrice()
+        {
+            return productElement_lohi;
+        }
+
+
+
+
 
 
 

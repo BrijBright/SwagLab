@@ -30,9 +30,13 @@ namespace SwagLab.POM
 
 
 
+        //var back = driver.FindElement(By.CssSelector("button[class='inventory_details_back_button']"));
 
+        public IWebElement getBackButton(IWebDriver driver)
+        {
 
-
+            return driver.FindElement(By.CssSelector("button[class='inventory_details_back_button']"));
+        }
 
 
 
